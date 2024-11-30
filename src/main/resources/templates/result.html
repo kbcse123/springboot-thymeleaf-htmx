@@ -1,0 +1,3 @@
+<tr th:each="matchedContact: ${matchedContacts}">
+    <td th:utext="${matchedContact.firstName()}"></td><td th:utext="${matchedContact.lastName()}"></td><td th:utext="${matchedContact.email()}"></td>
+</tr>

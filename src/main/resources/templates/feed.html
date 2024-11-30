@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Feed</title>
+    <script src="https://unpkg.com/htmx.org@1.9.5"
+            integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <link th:href="@{css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div id="mainContainer" class="container">
+    <h1><span th:text="#{page.feed}"/></h1>
+    <table id="inputWrapper" style="width:100%">
+        <tbody>
+        <tr>
+            <td>
+                <input id="searchFeeds" class="form-control" type="text"
+                       aria-label="Search"
+                       name="query"
+                       hx-post="/searchFeed"
+                       hx-target="#statusTable"
+                       hx-trigger="input from:#searchFeeds delay:100ms">
+            </td>
+            <td>
+                <button id="startVoice" title="Search by voice" style="width:190px">
+                    Activate Voice search
+                    <!--<img th:src="@{images/mic.svg}"/>-->
+                </button>
+                <button id="stopVoice" style="display:none;width:190px">Deactivate Voice Search</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="searchCommand" style="font-size:20px"></div>
+
+    <div hx-get="/statuses?page=1" hx-trigger="load"></div>
+
+</div>
+
+<script th:src="@{js/index.js}"></script>
+</body>
+</html>

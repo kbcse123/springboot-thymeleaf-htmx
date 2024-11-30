@@ -1,0 +1,39 @@
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<div id="statusTable">
+    <div th:each="status: ${statuses}" class="card" th:id="'card-'+${status.id()}">
+        <div class="card-body" >
+            <div class="d-flex">
+                <img src="https://via.placeholder.com/48" alt="User Avatar" class="rounded-circle me-3" width="48"
+                     height="48">
+                <div>
+                    <h2 class="card-title mb-0" th:text="${status.userDisplayName()}"/>
+                    <p class="card-text text-muted" th:text="${status.userHandle()}"/>
+                </div>
+            </div>
+            <p class="card-text mt-3" th:text="${status.content()}"/>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <button class="btn btn-outline-primary"><i class="bi bi-heart"></i> Like</button>
+                <button class="btn btn-outline-secondary"><i class="bi bi-chat"></i> Comment</button>
+                <button class="btn btn-outline-danger"
+                        th:hx-delete="'/delete/'+ ${status.id()}"
+                        th:hx-target="'#card-'+${status.id()}"
+                        hx-swap="delete"><i class="bi bi-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card" id="replaceMe">
+        <button id="loadMore"
+                th:disabled="${disableBtn}"
+                th:hx-get="${nextStatuses}"
+                hx-target="#replaceMe"
+                hx-swap="outerHTML"
+                class="btn btn-outline-primary">Load More...
+            <img alt="loading..." class="htmx-indicator" width="50px" height="50px"  th:src="@{images/spinner.gif}"/>
+        </button>
+        <div class="footer" id="foot">
+            Records loaded: <label th:text="${recordsLoaded}"/>
+        </div>
+    </div>
+</div>
+</html>
